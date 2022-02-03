@@ -1,6 +1,7 @@
 package paul_aglipay_p0.util;
 
 import paul_aglipay_p0.menus.Menu;
+import paul_aglipay_p0.util.collections.LinkedList;
 
 public class MenuRouter {
 	private final LinkedList<Menu> menus;

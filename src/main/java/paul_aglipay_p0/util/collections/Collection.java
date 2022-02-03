@@ -1,4 +1,4 @@
-package paul_aglipay_p0.util;
+package paul_aglipay_p0.util.collections;
 
 public interface Collection<T> {
 	boolean add(T element);
