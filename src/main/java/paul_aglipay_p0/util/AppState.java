@@ -3,8 +3,9 @@ package paul_aglipay_p0.util;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import paul_aglipay_p0.menus.RegisterMenu;
-import paul_aglipay_p0.menus.WelcomeMenu;
+import paul_aglipay_p0.menus.dashboardMenus.DashboardMenu;
+import paul_aglipay_p0.menus.startPages.RegisterMenu;
+import paul_aglipay_p0.menus.startPages.WelcomeMenu;
 import paul_aglipay_p0.services.UserService;
 
 public class AppState {
@@ -24,6 +25,7 @@ public class AppState {
 		router.addMenu(new WelcomeMenu(consoleReader, router));
 		router.addMenu(new RegisterMenu(consoleReader, router, userService));
 //		router.addMenu(new LoginMenu(consoleReader, router, UserService));
+		router.addMenu(new DashboardMenu(consoleReader, router, userService));
 	}
 	
 	public void startup() {

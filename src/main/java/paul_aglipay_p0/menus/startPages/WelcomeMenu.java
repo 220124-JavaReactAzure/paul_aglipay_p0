@@ -1,7 +1,8 @@
-package paul_aglipay_p0.menus;
+package paul_aglipay_p0.menus.startPages;
 
 import java.io.BufferedReader;
 
+import paul_aglipay_p0.menus.Menu;
 import paul_aglipay_p0.util.MenuRouter;
 import static paul_aglipay_p0.util.AppState.shutdown;
 

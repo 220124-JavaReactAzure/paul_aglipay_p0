@@ -1,7 +1,8 @@
-package paul_aglipay_p0.menus;
+package paul_aglipay_p0.menus.startPages;
 import java.io.BufferedReader;
 
 import paul_aglipay_p0.exceptions.InvalidRequestException;
+import paul_aglipay_p0.menus.Menu;
 import paul_aglipay_p0.models.User;
 import paul_aglipay_p0.services.UserService;
 import paul_aglipay_p0.util.MenuRouter;
