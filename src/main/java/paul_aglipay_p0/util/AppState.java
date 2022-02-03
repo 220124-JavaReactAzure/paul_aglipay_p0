@@ -3,6 +3,7 @@ package paul_aglipay_p0.util;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import paul_aglipay_p0.menus.RegisterMenu;
 import paul_aglipay_p0.menus.WelcomeMenu;
 import paul_aglipay_p0.services.UserService;
 
@@ -21,7 +22,7 @@ public class AppState {
 		
 		UserService userService = new UserService();
 		router.addMenu(new WelcomeMenu(consoleReader, router));
-//		router.addMenu(new RegisterMenu(consoleReader, router, UserService));
+		router.addMenu(new RegisterMenu(consoleReader, router, userService));
 //		router.addMenu(new LoginMenu(consoleReader, router, UserService));
 	}
 	
