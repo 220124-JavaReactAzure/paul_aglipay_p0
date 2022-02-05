@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import paul_aglipay_p0.menus.Menu;
 import paul_aglipay_p0.models.Account;
+import paul_aglipay_p0.models.Transaction;
 import paul_aglipay_p0.models.User;
 import paul_aglipay_p0.services.AccountService;
 import paul_aglipay_p0.services.UserService;
@@ -32,13 +33,22 @@ public class ViewMyAccount extends Menu {
 		int rowNum = 0;
 		ArrayList<Account> accountTable = accountService.getAccounts();
 
+		System.out.println(
+				"---------------------------------------------------------------------------------------------");
+		System.out.printf("%7s %5s %10s ", "Select", "DESCRIPTION", "AMOUNT");
+		System.out.println("");
 		for (Account accountRow : accountTable) {
-			System.out.println(
-					String.valueOf(rowNum + 1) + ":" + accountRow.getDescription() + " - " + accountRow.getAmount());
+//			System.out.println(
+//					String.valueOf(rowNum + 1) + ":" + accountRow.getDescription() + " - " + accountRow.getAmount());
+			System.out.format("%7s %7s %14s", String.valueOf(rowNum + 1), accountRow.getDescription(), accountRow.getAmount());			
+			System.out.println("");
 			accountService.setSessionAccount(accountRow);
 			rowNum++;
 
 		}
+
+		System.out.println(
+				"---------------------------------------------------------------------------------------------");
 
 		if (accountTable.size() > 0) {
 			System.out.println("Is Ok?");
@@ -47,6 +57,7 @@ public class ViewMyAccount extends Menu {
 			Account accountRow = accountTable.get(Integer.parseInt(okVar) - 1);
 			System.out.println(
 					accountRow.getId() + " \n " + accountRow.getDescription() + "\n " + accountRow.getAmount());
+
 			accountService.setSessionAccount(accountRow);
 
 			System.out.println("Is Ok: " + okVar);
