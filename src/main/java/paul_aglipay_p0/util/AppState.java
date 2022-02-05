@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import paul_aglipay_p0.daos.AccountDAO;
 import paul_aglipay_p0.daos.UserDAO;
 import paul_aglipay_p0.menus.dashboardMenus.AccountCreationMenu;
+import paul_aglipay_p0.menus.dashboardMenus.AccountMenu;
 import paul_aglipay_p0.menus.dashboardMenus.DashboardMenu;
 import paul_aglipay_p0.menus.dashboardMenus.ViewMyAccount;
 import paul_aglipay_p0.menus.startPages.LoginMenu;
@@ -40,6 +41,7 @@ public class AppState {
 		router.addMenu(new AccountCreationMenu(consoleReader, router, accountService));
 //		router.addMenu(new ViewMyAccount(consoleReader, router, accountService));
 		router.addMenu(new ViewMyAccount(consoleReader, router, userService, accountService));
+		router.addMenu(new AccountMenu(consoleReader, router, userService, accountService));
 		
 	}
 	

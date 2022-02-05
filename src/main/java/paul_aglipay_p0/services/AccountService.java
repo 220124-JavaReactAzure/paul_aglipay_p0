@@ -7,43 +7,65 @@ import paul_aglipay_p0.daos.UserDAO;
 import paul_aglipay_p0.exceptions.InvalidRequestException;
 import paul_aglipay_p0.exceptions.ResourcePersistenceException;
 import paul_aglipay_p0.models.Account;
+import paul_aglipay_p0.models.User;
 import paul_aglipay_p0.util.collections.LinkedList;
 
 public class AccountService {
 	private final AccountDAO accountDAO;
 	private final UserService userService;
-	
+	private Account sessionAccount;
+
+	public void setSessionAccount(Account sessionAccount) {
+		this.sessionAccount = sessionAccount;
+	}
+
 	public AccountService(AccountDAO accountDAO, UserService userService) {
 		this.accountDAO = accountDAO;
 		this.userService = userService;
+		this.sessionAccount = null;
 	}
 	
+	public Account getSessionAccount() {
+		return sessionAccount;
+	}
+
 	public void createAccount(Account newAccount) {
-		if(!isAccountValid(newAccount)) {
+		if (!isAccountValid(newAccount)) {
 			throw new InvalidRequestException("The Account was provided invalid information");
 		}
-		
+
 		newAccount.setUser(userService.getSessionUser());
 		Account createdAccount = accountDAO.create(newAccount);
-		
-		if(createdAccount == null) {
+
+		if (createdAccount == null) {
 			throw new ResourcePersistenceException("The Account could not be persisted");
 		}
 	}
-	
-	public void getAccounts() {
-		
-		ArrayList<Account> userAccounts = accountDAO.findByUserId("4f17bb94-f153-4ccf-8318-7fe995c7b60c");
-		for(Account accountRow:userAccounts) {
-			System.out.println(accountRow.getDescription() + " - " + accountRow.getAmount());
-		}
 
+	public Account getAccountById(String id) {
+
+		Account userAccount = accountDAO.findById(id);
+
+		sessionAccount = userAccount;
+		return sessionAccount;
 	}
-	
-	private boolean isAccountValid(Account newAccount) {
+
+	public ArrayList<Account> getAccounts() {
+
+		ArrayList<Account> userAccounts = accountDAO.findByUserId("4f17bb94-f153-4ccf-8318-7fe995c7b60c");
+//		for (Account accountRow : userAccounts) {
+//			System.out.println(accountRow.getDescription() + " - " + accountRow.getAmount());
+//		}
 		
-		if(newAccount == null) return false;
-		if(newAccount.getDescription() == null || newAccount.getDescription().trim().equals("")) return false;
+		return userAccounts;
+	}
+
+	private boolean isAccountValid(Account newAccount) {
+
+		if (newAccount == null)
+			return false;
+		if (newAccount.getDescription() == null || newAccount.getDescription().trim().equals(""))
+			return false;
 //		if(newAccount.getAmount() == null || newAccount.getAmount().trim().equals("") || Integer.valueOf(newAccount.getAmount()) > 20 || Integer.valueOf(newAccount.getAmount()) < 0) return false;
 		return newAccount.getAmount() != null || !newAccount.getAmount().trim().equals("");
 	}

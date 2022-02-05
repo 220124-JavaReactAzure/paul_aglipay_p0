@@ -16,7 +16,7 @@ public class Account {
 		super();
 		this.description = description;
 		this.amount = amount;
-		this.user = user;
+//		this.user = user;
 	}
 
 	public String getId() {
