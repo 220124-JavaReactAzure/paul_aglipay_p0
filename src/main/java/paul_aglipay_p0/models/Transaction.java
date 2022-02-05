@@ -4,15 +4,12 @@ public class Transaction {
 	private String id;
 	private String description;
 	private String amount;
-	private Account account;
-	
-	
+	private Account account;	
 
 	public Transaction() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 
 	public Transaction(String description, String amount) {

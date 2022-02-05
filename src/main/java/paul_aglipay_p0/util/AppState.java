@@ -36,14 +36,13 @@ public class AppState {
 		
 		UserService userService = new UserService(userDAO);
 		AccountService accountService = new AccountService(accountDAO, userService);
-		TransactionService transactionService = new TransactionService(transactionDAO);
+		TransactionService transactionService = new TransactionService(transactionDAO, accountService);
 		
 		router.addMenu(new WelcomeMenu(consoleReader, router));
 		router.addMenu(new RegisterMenu(consoleReader, router, userService));
 		router.addMenu(new LoginMenu(consoleReader, router, userService));
 		router.addMenu(new DashboardMenu(consoleReader, router, userService));
 		router.addMenu(new AccountCreationMenu(consoleReader, router, accountService));
-//		router.addMenu(new ViewMyAccount(consoleReader, router, accountService));
 		router.addMenu(new ViewMyAccount(consoleReader, router, userService, accountService));
 		router.addMenu(new AccountMenu(consoleReader, router, userService, accountService, transactionService));
 		

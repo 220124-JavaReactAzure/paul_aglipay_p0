@@ -20,7 +20,7 @@ public class TransactionDAO implements CrudDAO<Transaction> {
 
 			transaction.setId(UUID.randomUUID().toString());
 
-			String sql = "insert into transactions (id, description, amount, user_id) values (?, ?, ?, ?)";
+			String sql = "insert into transactions (id, description, amount, account_id) values (?, ?, ?, ?)";
 
 			PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -84,7 +84,6 @@ public class TransactionDAO implements CrudDAO<Transaction> {
 				transaction.setAmount(rs.getString("amount"));
 
 				results.add(transaction);
-//				return account;
 			}
 			return results;
 

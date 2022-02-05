@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import paul_aglipay_p0.models.Account;
-import paul_aglipay_p0.models.User;
 
 import paul_aglipay_p0.util.collections.List;
 import paul_aglipay_p0.util.datasource.ConnectionFactory;
@@ -55,7 +54,7 @@ public class AccountDAO implements CrudDAO<Account> {
 
 	@Override
 	public Account findById(String id) {
-//		ArrayList<Account> results = new ArrayList<>();
+
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			String sql = "select * from accounts where id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -67,11 +66,8 @@ public class AccountDAO implements CrudDAO<Account> {
 				account.setId(rs.getString("id"));
 				account.setDescription(rs.getString("description"));
 				account.setAmount(rs.getString("amount"));
-
-//				results.add(account);
 				return account;
 			}
-//			return results;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -96,8 +92,6 @@ public class AccountDAO implements CrudDAO<Account> {
 		ArrayList<Account> results = new ArrayList<>();
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			
-
-			
 			String sql = "select * from accounts where user_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, userId);
@@ -110,7 +104,6 @@ public class AccountDAO implements CrudDAO<Account> {
 				account.setAmount(rs.getString("amount"));
 
 				results.add(account);
-//				return account;
 			}
 			return results;
 

@@ -1,15 +1,13 @@
 package paul_aglipay_p0.menus.dashboardMenus;
 
+import static paul_aglipay_p0.util.AppState.shutdown;
+
 import java.io.BufferedReader;
 import java.util.ArrayList;
 
-import paul_aglipay_p0.daos.AccountDAO;
-import paul_aglipay_p0.daos.TransactionDAO;
 import paul_aglipay_p0.menus.Menu;
 import paul_aglipay_p0.models.Account;
 import paul_aglipay_p0.models.Transaction;
-//import paul_aglipay_p0.models.Account;
-import paul_aglipay_p0.models.User;
 import paul_aglipay_p0.services.AccountService;
 import paul_aglipay_p0.services.TransactionService;
 import paul_aglipay_p0.services.UserService;
@@ -31,22 +29,56 @@ public class AccountMenu extends Menu {
 	@Override
 	public void render() throws Exception {
 
-		User sessionUser = userService.getSessionUser();
 		Account sessionAccount = accountService.getSessionAccount();
 		System.out.println("View for: Account\n");
-//		Account accountRow = accountService.getAccountById("a51bc22d-e9c6-4cab-a9c8-a3e80ecd10fc");
 
 		System.out.println(sessionAccount.getDescription() + " - " + sessionAccount.getAmount());
 
 		System.out.println("transactionsTable: ");
-		ArrayList<Transaction> transactionsTable = transactionService.getTransactionsByAccount("8");
+		ArrayList<Transaction> transactionsTable = transactionService.getTransactionsByAccount(sessionAccount.getId());
 		for (Transaction tt : transactionsTable) {
 			System.out.println(tt.getDescription() + " - " + tt.getAmount());
 		}
+		
+		ArrayList<String> actions = new ArrayList<>();
+		actions.add("Send");
+		actions.add("Logout");
+		
+		String menu = "1) Send\n" + 
+				"2) Logout\n" + 
+				 "> ";
 
-		System.out.println("Is Ok?");
-		String okVar = consoleReader.readLine();
-		System.out.println("Is Ok: " + okVar);
+		System.out.print(menu);
+//		String userSelection = consoleReader.readLine();
+//
+//		switch (userSelection) {
+//		case "1":
+//			System.out.println("transactionDescription?");
+//			String transactionDescription = consoleReader.readLine();
+//			
+//			System.out.println("transactionAmount?");
+//			String transactionAmount = consoleReader.readLine();
+//			
+//			Transaction newTransaction = new Transaction(transactionDescription, transactionAmount);
+//			
+//			transactionService.createTransaction(newTransaction);
+//			
+//			System.out.println("Is Ok?");
+//			String okVar = consoleReader.readLine();
+//			System.out.println("Is Ok: " + okVar);
+//			break;
+//		case "2":
+//			router.transfer("/register");
+//			break;
+//		case "3":
+//			shutdown();
+//			break;
+//		default:
+//			System.out.println("What on earth are you trying to tell me to do?!?!");
+//			break;
+//		}
+
+
 
 	}
 
