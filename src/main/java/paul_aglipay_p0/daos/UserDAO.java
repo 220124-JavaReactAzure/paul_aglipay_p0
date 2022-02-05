@@ -92,15 +92,15 @@ public class UserDAO implements CrudDAO<User> {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				User User = new User();
-				User.setId(rs.getString("id"));
-				User.setFirstName(rs.getString("first_name"));
-				User.setLastName(rs.getString("last_name"));
-				User.setEmail(rs.getString("email"));
+				User user = new User();
+				user.setId(rs.getString("id"));
+				user.setFirstName(rs.getString("first_name"));
+				user.setLastName(rs.getString("last_name"));
+				user.setEmail(rs.getString("email"));
 //				User.setUsername(rs.getString("username"));
 //				User.setPassword(rs.getString("password"));
 
-				return User;
+				return user;
 			}
 
 		} catch (SQLException e) {

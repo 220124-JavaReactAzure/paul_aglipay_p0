@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import paul_aglipay_p0.menus.Menu;
 import paul_aglipay_p0.util.MenuRouter;
 import static paul_aglipay_p0.util.AppState.shutdown;
-
 public class WelcomeMenu extends Menu{
 
 //	{System.out.println("WelcomeMenu");}

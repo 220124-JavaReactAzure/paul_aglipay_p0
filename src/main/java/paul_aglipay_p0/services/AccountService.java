@@ -1,10 +1,13 @@
 package paul_aglipay_p0.services;
 
+import java.util.ArrayList;
+
 import paul_aglipay_p0.daos.AccountDAO;
 import paul_aglipay_p0.daos.UserDAO;
 import paul_aglipay_p0.exceptions.InvalidRequestException;
 import paul_aglipay_p0.exceptions.ResourcePersistenceException;
 import paul_aglipay_p0.models.Account;
+import paul_aglipay_p0.util.collections.LinkedList;
 
 public class AccountService {
 	private final AccountDAO accountDAO;
@@ -26,6 +29,15 @@ public class AccountService {
 		if(createdAccount == null) {
 			throw new ResourcePersistenceException("The Account could not be persisted");
 		}
+	}
+	
+	public void getAccounts() {
+		
+		ArrayList<Account> userAccounts = accountDAO.findByUserId("4f17bb94-f153-4ccf-8318-7fe995c7b60c");
+		for(Account accountRow:userAccounts) {
+			System.out.println(accountRow.getDescription() + " - " + accountRow.getAmount());
+		}
+
 	}
 	
 	private boolean isAccountValid(Account newAccount) {

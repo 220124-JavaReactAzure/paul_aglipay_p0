@@ -2,10 +2,14 @@ package paul_aglipay_p0.daos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import paul_aglipay_p0.models.Account;
+import paul_aglipay_p0.models.User;
+
 import paul_aglipay_p0.util.collections.List;
 import paul_aglipay_p0.util.datasource.ConnectionFactory;
 
@@ -65,5 +69,31 @@ public class AccountDAO implements CrudDAO<Account> {
 	public boolean delete(String id) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public ArrayList<Account> findByUserId(String userId) {
+		
+		ArrayList<Account> results = new ArrayList<>();
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			String sql = "select * from Accounts where user_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, userId);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Account account = new Account();
+				account.setId(rs.getString("id"));
+				account.setDescription(rs.getString("description"));
+				account.setAmount(rs.getString("amount"));
+
+				results.add(account);
+//				return account;
+			}
+			return results;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

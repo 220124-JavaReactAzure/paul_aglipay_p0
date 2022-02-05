@@ -14,7 +14,7 @@ public class ConnectionFactory {
 	private Properties prop = new Properties();
 	
 	{
-		System.out.println("ConnectionFactory");
+		System.out.println("Please Wait...");
 	}
 	
 	static {

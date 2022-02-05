@@ -6,6 +6,11 @@ public class Account {
 	private String description;
 	private String amount;
 	private User user;
+	
+	
+	public Account() {
+		super();
+	}
 
 	public Account(String description, String amount) {
 		super();

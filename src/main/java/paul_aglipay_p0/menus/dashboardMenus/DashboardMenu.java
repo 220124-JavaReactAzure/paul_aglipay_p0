@@ -43,7 +43,7 @@ public class DashboardMenu extends Menu {
 			router.transfer("/create-account");
 			break;
 		case "3":
-			System.out.println("View My Monsters selected:");
+			System.out.println("View My Account(s) selected:");
 			router.transfer("/my-accounts");
 			break;
 		case "4":
