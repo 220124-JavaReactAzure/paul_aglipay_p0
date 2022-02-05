@@ -11,14 +11,43 @@ import paul_aglipay_p0.util.collections.List;
 import paul_aglipay_p0.util.datasource.ConnectionFactory;
 
 public class UserDAO implements CrudDAO<User> {
+	public User findByUsernameAndPassword(String username, String password) {
 
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+			String sql = "select * from Users where username = ? and password = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, username);
+			pstmt.setString(2, password);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				User User = new User();
+				User.setId(rs.getString("id"));
+				User.setFirstName(rs.getString("first_name"));
+				User.setLastName(rs.getString("last_name"));
+				User.setEmail(rs.getString("email"));
+//				User.setUsername(rs.getString("username"));
+//				User.setPassword(rs.getString("password"));
+
+				return User;
+			}
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 	@Override
 	public User create(User newUser) {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
 			newUser.setId(UUID.randomUUID().toString());
 
-			String sql = "insert into Users (User_id, first_name, last_name, email, username, password) values (?, ?, ?, ?, ?, ?)";
+//			String sql = "insert into Users (User_id, first_name, last_name, email, username, password) values (?, ?, ?, ?, ?, ?)";
+			String sql = "insert into Users (id, first_name, last_name, email) values (?, ?, ?, ?)";
 
 			PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -26,8 +55,8 @@ public class UserDAO implements CrudDAO<User> {
 			ps.setString(2, newUser.getFirstName());
 			ps.setString(3, newUser.getLastName());
 			ps.setString(4, newUser.getEmail());
-			ps.setString(5, newUser.getUsername());
-			ps.setString(6, newUser.getPassword());
+//			ps.setString(5, newUser.getUsername());
+//			ps.setString(6, newUser.getPassword());
 
 			int rowsInserted = ps.executeUpdate();
 
@@ -55,11 +84,11 @@ public class UserDAO implements CrudDAO<User> {
 		return null;
 	}
 	
-	public User findByUsername(String username) {
+	public User findByEmail(String email) {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
-			String sql = "select * from Users where username = ?";
+			String sql = "select * from Users where email = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
+			ps.setString(1, email);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -68,8 +97,8 @@ public class UserDAO implements CrudDAO<User> {
 				User.setFirstName(rs.getString("first_name"));
 				User.setLastName(rs.getString("last_name"));
 				User.setEmail(rs.getString("email"));
-				User.setUsername(rs.getString("username"));
-				User.setPassword(rs.getString("password"));
+//				User.setUsername(rs.getString("username"));
+//				User.setPassword(rs.getString("password"));
 
 				return User;
 			}

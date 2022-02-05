@@ -1,5 +1,6 @@
 package paul_aglipay_p0.exceptions;
 
+@SuppressWarnings("serial")
 public class InvalidRequestException extends RuntimeException {
 
 	public InvalidRequestException(String message) {
