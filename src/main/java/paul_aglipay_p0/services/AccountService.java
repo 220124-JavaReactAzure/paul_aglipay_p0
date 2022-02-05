@@ -24,7 +24,7 @@ public class AccountService {
 		this.userService = userService;
 		this.sessionAccount = null;
 	}
-	
+
 	public Account getSessionAccount() {
 		return sessionAccount;
 	}
@@ -52,11 +52,8 @@ public class AccountService {
 
 	public ArrayList<Account> getAccounts() {
 
-		ArrayList<Account> userAccounts = accountDAO.findByUserId("4f17bb94-f153-4ccf-8318-7fe995c7b60c");
-//		for (Account accountRow : userAccounts) {
-//			System.out.println(accountRow.getDescription() + " - " + accountRow.getAmount());
-//		}
-		
+		ArrayList<Account> userAccounts = accountDAO.findByUserId(userService.getSessionUser().getId());
+
 		return userAccounts;
 	}
 

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import paul_aglipay_p0.daos.AccountDAO;
+import paul_aglipay_p0.daos.TransactionDAO;
 import paul_aglipay_p0.daos.UserDAO;
 import paul_aglipay_p0.menus.dashboardMenus.AccountCreationMenu;
 import paul_aglipay_p0.menus.dashboardMenus.AccountMenu;
@@ -13,6 +14,7 @@ import paul_aglipay_p0.menus.startPages.LoginMenu;
 import paul_aglipay_p0.menus.startPages.RegisterMenu;
 import paul_aglipay_p0.menus.startPages.WelcomeMenu;
 import paul_aglipay_p0.services.AccountService;
+import paul_aglipay_p0.services.TransactionService;
 import paul_aglipay_p0.services.UserService;
 
 public class AppState {
@@ -30,9 +32,11 @@ public class AppState {
 
 		UserDAO userDAO = new UserDAO();
 		AccountDAO accountDAO = new AccountDAO();
+		TransactionDAO transactionDAO = new TransactionDAO();
 		
 		UserService userService = new UserService(userDAO);
 		AccountService accountService = new AccountService(accountDAO, userService);
+		TransactionService transactionService = new TransactionService(transactionDAO);
 		
 		router.addMenu(new WelcomeMenu(consoleReader, router));
 		router.addMenu(new RegisterMenu(consoleReader, router, userService));
@@ -41,7 +45,7 @@ public class AppState {
 		router.addMenu(new AccountCreationMenu(consoleReader, router, accountService));
 //		router.addMenu(new ViewMyAccount(consoleReader, router, accountService));
 		router.addMenu(new ViewMyAccount(consoleReader, router, userService, accountService));
-		router.addMenu(new AccountMenu(consoleReader, router, userService, accountService));
+		router.addMenu(new AccountMenu(consoleReader, router, userService, accountService, transactionService));
 		
 	}
 	

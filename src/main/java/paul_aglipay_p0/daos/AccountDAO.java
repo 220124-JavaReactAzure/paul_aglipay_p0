@@ -95,6 +95,9 @@ public class AccountDAO implements CrudDAO<Account> {
 
 		ArrayList<Account> results = new ArrayList<>();
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			
+
+			
 			String sql = "select * from accounts where user_id = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, userId);

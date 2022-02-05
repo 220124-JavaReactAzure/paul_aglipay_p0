@@ -28,27 +28,33 @@ public class ViewMyAccount extends Menu {
 
 		System.out.println("Account(s) View for: \n");
 		System.out.println("Welcome " + sessionUser.getFirstName() + " " + sessionUser.getLastName());
+
 		int rowNum = 0;
-		for (Account accountRow : accountService.getAccounts()) {
-			System.out
-					.println(String.valueOf(rowNum+1) + ":" +  accountRow.getId() + " - " + accountRow.getDescription() + " - " + accountRow.getAmount());
+		ArrayList<Account> accountTable = accountService.getAccounts();
+
+		for (Account accountRow : accountTable) {
+			System.out.println(
+					String.valueOf(rowNum + 1) + ":" + accountRow.getDescription() + " - " + accountRow.getAmount());
 			accountService.setSessionAccount(accountRow);
 			rowNum++;
-			
+
 		}
 
-		System.out.println("Is Ok?");
-		String okVar = consoleReader.readLine();
-		ArrayList<Account> accountTable = accountService.getAccounts();
-		
-		Account accountRow = accountTable.get(Integer.parseInt(okVar) + 1);
-		System.out.println(
-				accountRow.getId() + " \n " + accountRow.getDescription() + "\n " + accountRow.getAmount());
-		accountService.setSessionAccount(accountRow);
-		
+		if (accountTable.size() > 0) {
+			System.out.println("Is Ok?");
+			String okVar = consoleReader.readLine();
 
-		System.out.println("Is Ok: " + okVar);
-		router.transfer("/account");
+			Account accountRow = accountTable.get(Integer.parseInt(okVar) - 1);
+			System.out.println(
+					accountRow.getId() + " \n " + accountRow.getDescription() + "\n " + accountRow.getAmount());
+			accountService.setSessionAccount(accountRow);
+
+			System.out.println("Is Ok: " + okVar);
+			router.transfer("/account");
+		} else {
+
+			System.out.println("You have no accounts.");
+		}
 	}
 
 }
