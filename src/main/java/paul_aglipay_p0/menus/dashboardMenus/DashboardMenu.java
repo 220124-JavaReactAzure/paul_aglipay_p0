@@ -20,7 +20,9 @@ public class DashboardMenu extends Menu {
 
 		User sessionUser = userService.getSessionUser();
 
-		System.out.println("Welcome " + sessionUser.getEmail());
+//		System.out.println("Welcome " + sessionUser.getEmail());
+		System.out.println("Welcome " + sessionUser.getFirstName() + " " + sessionUser.getLastName());
+
 		String menu = "1) View/edit my profile information\n" + 
 				"2) Edit/create account(s)\n" +
 				"3) View my accounts\n" + 

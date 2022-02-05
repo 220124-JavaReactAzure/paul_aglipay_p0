@@ -32,7 +32,7 @@ public class AccountService {
 		
 		if(newAccount == null) return false;
 		if(newAccount.getDescription() == null || newAccount.getDescription().trim().equals("")) return false;
-		if(newAccount.getAmount() == null || newAccount.getAmount().trim().equals("") || Integer.valueOf(newAccount.getAmount()) > 20 || Integer.valueOf(newAccount.getAmount()) < 0) return false;
+//		if(newAccount.getAmount() == null || newAccount.getAmount().trim().equals("") || Integer.valueOf(newAccount.getAmount()) > 20 || Integer.valueOf(newAccount.getAmount()) < 0) return false;
 		return newAccount.getAmount() != null || !newAccount.getAmount().trim().equals("");
 	}
 }

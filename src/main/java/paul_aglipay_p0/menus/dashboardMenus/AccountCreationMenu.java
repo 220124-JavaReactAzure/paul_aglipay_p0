@@ -11,7 +11,7 @@ public class AccountCreationMenu extends Menu {
 	private final AccountService accountService;
 	
 	public AccountCreationMenu(BufferedReader consoleReader, MenuRouter router, AccountService accountService) {
-		super("AccountCreation", "/create-Account", consoleReader, router);
+		super("AccountCreation", "/create-account", consoleReader, router);
 		this.accountService = accountService;
 		// TODO Auto-generated constructor stub
 	}
@@ -19,9 +19,9 @@ public class AccountCreationMenu extends Menu {
 	public void render() throws Exception {
 		System.out.println("Account Creator\n" + "Fill out the attributes below");
 		
-		System.out.println("1 - Name");
+		System.out.println("1 - Type");
 		String accountDescription = consoleReader.readLine();
-		System.out.println("2 - Type");
+		System.out.println("2 - Amount");
 		String accountAmount = consoleReader.readLine();
 		
 		Account newAccount = new Account(accountDescription, accountAmount);

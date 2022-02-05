@@ -20,7 +20,7 @@ public class AccountDAO implements CrudDAO<Account> {
 
 			account.setId(UUID.randomUUID().toString());
 
-			String sql = "insert into Accounts (id, description, amount, user_id) values (?, ?, ?, ?)";
+			String sql = "insert into accounts (id, description, amount, user_id) values (?, ?, ?, ?)";
 
 			PreparedStatement ps = conn.prepareStatement(sql);
 
