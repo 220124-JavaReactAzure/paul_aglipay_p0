@@ -16,16 +16,19 @@ import paul_aglipay_p0.menus.startPages.WelcomeMenu;
 import paul_aglipay_p0.services.AccountService;
 import paul_aglipay_p0.services.TransactionService;
 import paul_aglipay_p0.services.UserService;
+import paul_aglipay_p0.util.logging.Logger;
 
 public class AppState {
 
-	{System.out.println("AppState");}
-	
-
+	private final Logger logger;
 	private static boolean isRunning;
 	private final MenuRouter router;
 	
 	public AppState() {
+		
+		logger = Logger.getLogger(true);
+		logger.log("Application is initiliazing.....");
+		
 		isRunning = true;
 		router = new MenuRouter();
 		BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
@@ -45,7 +48,8 @@ public class AppState {
 		router.addMenu(new AccountCreationMenu(consoleReader, router, accountService));
 		router.addMenu(new ViewMyAccount(consoleReader, router, userService, accountService));
 		router.addMenu(new AccountMenu(consoleReader, router, userService, accountService, transactionService));
-		
+
+		logger.log("Application initiliazed!!! We do did it!~WOOO~");
 	}
 	
 	public void startup() {

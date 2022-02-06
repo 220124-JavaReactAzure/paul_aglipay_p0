@@ -40,6 +40,7 @@ public class UserDAO implements CrudDAO<User> {
 
 		return null;
 	}
+
 	@Override
 	public User create(User newUser) {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
@@ -83,7 +84,7 @@ public class UserDAO implements CrudDAO<User> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	public User findByEmail(String email) {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			String sql = "select * from Users where email = ?";
@@ -111,7 +112,28 @@ public class UserDAO implements CrudDAO<User> {
 
 	@Override
 	public boolean update(User updatedObj) {
-		// TODO Auto-generated method stub
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+			//UPDATE table_name	SET column1 = value1, column2 = value2,	WHERE condition;
+			String sql = "update Users SET first_name = ?";
+
+			PreparedStatement ps = conn.prepareStatement(sql);
+
+			ps.setString(1, updatedObj.getFirstName());
+//			ps.setString(2, updatedObj.getLastName());
+//			ps.setString(4, updatedObj.getEmail());
+
+			int rowsInserted = ps.executeUpdate();
+
+			if (rowsInserted != 0) {
+				return true;
+			}
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
 		return false;
 	}
 

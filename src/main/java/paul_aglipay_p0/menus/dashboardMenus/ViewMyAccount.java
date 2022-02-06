@@ -27,8 +27,7 @@ public class ViewMyAccount extends Menu {
 	public void render() throws Exception {
 		User sessionUser = userService.getSessionUser();
 
-		System.out.println("Account(s) View for: \n");
-		System.out.println("Welcome " + sessionUser.getFirstName() + " " + sessionUser.getLastName());
+		System.out.println("Account(s) View for: \n" + sessionUser.getFirstName() + " " + sessionUser.getLastName());
 
 		int rowNum = 0;
 		ArrayList<Account> accountTable = accountService.getAccounts();
@@ -51,7 +50,7 @@ public class ViewMyAccount extends Menu {
 				"---------------------------------------------------------------------------------------------");
 
 		if (accountTable.size() > 0) {
-			System.out.println("Is Ok?");
+			System.out.println("Please select by number:");
 			String okVar = consoleReader.readLine();
 
 			Account accountRow = accountTable.get(Integer.parseInt(okVar) - 1);

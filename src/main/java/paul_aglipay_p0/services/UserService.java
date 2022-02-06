@@ -48,6 +48,33 @@ public class UserService {
 		return persistedUser;
 	}
 	
+	public User updateUser(User user) {
+		if(!isUserValid(user)) {
+			throw new InvalidRequestException("Invalid user data provider");
+		}
+
+		boolean EmailAvailable = userDao.findByEmail(user.getEmail()) == null;
+		boolean emailAvailable = userDao.findByEmail(user.getEmail()) == null;
+		
+		if(!EmailAvailable || !emailAvailable) {
+			if(!EmailAvailable && emailAvailable) {
+				throw new ResourcePersistenceException("The provided Email was already taken in the database");
+			} else if(EmailAvailable) {
+				throw new ResourcePersistenceException("The provided email was already taken in the database");
+			} else {
+				throw new ResourcePersistenceException("The provided Email and email were already taken in the database");
+			}
+		}
+		
+		boolean persistedUser = userDao.update(user);
+		
+		if(!persistedUser) {
+			throw new ResourcePersistenceException("The User could not be persisted");
+		}
+		
+		return user;
+	}
+	
 	
 	public void authenticateUser(String email) {
 		

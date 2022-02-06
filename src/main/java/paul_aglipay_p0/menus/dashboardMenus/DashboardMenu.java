@@ -20,9 +20,9 @@ public class DashboardMenu extends Menu {
 
 		User sessionUser = userService.getSessionUser();
 
-//		System.out.println("Welcome " + sessionUser.getEmail());
 		System.out.println("Welcome " + sessionUser.getFirstName() + " " + sessionUser.getLastName());
-
+		System.out.println("What woud you like to do?");
+		
 		String menu = "1) View/edit my profile information\n" + 
 				"2) Edit/create account(s)\n" +
 				"3) View my accounts\n" + 
@@ -47,7 +47,9 @@ public class DashboardMenu extends Menu {
 			router.transfer("/my-accounts");
 			break;
 		case "4":
+			System.out.println("Logging Out...");
 			userService.logout();
+			router.transfer("/welcome");
 			break;
 		default:
 			System.out.println("The user made an invalid selection");

@@ -17,7 +17,7 @@ public class WelcomeMenu extends Menu{
 	public void render() throws Exception {
 		
 		System.out.print(
-				"Welcome to the Mosnter Laboratory!\n" + "1) Login\n" + "2) Register\n" + "3) Exits\n" + "> ");
+				"Welcome to Paul's Bank!\n" + "1) Login\n" + "2) Register\n" + "3) Exits\n" + "> ");
 		
 		String userSelection = consoleReader.readLine();
 
