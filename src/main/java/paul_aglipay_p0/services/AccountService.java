@@ -39,6 +39,8 @@ public class AccountService {
 
 		if (createdAccount == null) {
 			throw new ResourcePersistenceException("The Account could not be persisted");
+		} else {
+			setSessionAccount(createdAccount);
 		}
 	}
 

@@ -9,6 +9,7 @@ import paul_aglipay_p0.daos.UserDAO;
 import paul_aglipay_p0.menus.dashboardMenus.AccountCreationMenu;
 import paul_aglipay_p0.menus.dashboardMenus.AccountMenu;
 import paul_aglipay_p0.menus.dashboardMenus.DashboardMenu;
+import paul_aglipay_p0.menus.dashboardMenus.UserProfileEdit;
 import paul_aglipay_p0.menus.dashboardMenus.ViewMyAccount;
 import paul_aglipay_p0.menus.startPages.LoginMenu;
 import paul_aglipay_p0.menus.startPages.RegisterMenu;
@@ -48,6 +49,7 @@ public class AppState {
 		router.addMenu(new AccountCreationMenu(consoleReader, router, accountService));
 		router.addMenu(new ViewMyAccount(consoleReader, router, userService, accountService));
 		router.addMenu(new AccountMenu(consoleReader, router, userService, accountService, transactionService));
+		router.addMenu(new UserProfileEdit(consoleReader, router, userService));
 
 		logger.log("Application initiliazed!!! We do did it!~WOOO~");
 	}

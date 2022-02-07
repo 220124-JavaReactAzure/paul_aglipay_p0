@@ -19,15 +19,15 @@ public class AccountCreationMenu extends Menu {
 	public void render() throws Exception {
 		System.out.println("Account Creator\n" + "Fill out the attributes below");
 		
-		System.out.println("1 - Type");
+		System.out.println("Please provide an account description: ");
 		String accountDescription = consoleReader.readLine();
-		System.out.println("2 - Amount");
+		System.out.println("Initialize the amount: ");
 		String accountAmount = consoleReader.readLine();
 		
 		Account newAccount = new Account(accountDescription, accountAmount);
 		
 		accountService.createAccount(newAccount);
-
+		router.transfer("/account");
 	}
 
 }

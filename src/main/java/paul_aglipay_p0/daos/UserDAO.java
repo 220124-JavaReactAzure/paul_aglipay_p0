@@ -115,13 +115,14 @@ public class UserDAO implements CrudDAO<User> {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
 			//UPDATE table_name	SET column1 = value1, column2 = value2,	WHERE condition;
-			String sql = "update Users SET first_name = ?";
+			String sql = "UPDATE Users SET first_name = ?, last_name = ?, email = ? WHERE id = ?";
 
 			PreparedStatement ps = conn.prepareStatement(sql);
 
 			ps.setString(1, updatedObj.getFirstName());
-//			ps.setString(2, updatedObj.getLastName());
-//			ps.setString(4, updatedObj.getEmail());
+			ps.setString(2, updatedObj.getLastName());
+			ps.setString(3, updatedObj.getEmail());
+			ps.setString(4, updatedObj.getId());
 
 			int rowsInserted = ps.executeUpdate();
 
