@@ -18,37 +18,52 @@ public class UserProfileEdit extends Menu {
 
 	@Override
 	public void render() throws Exception {
-		System.out.println("The User selected Register");
+		System.out.println("Hi, " + userService.getSessionUser().getFirstName() + " "
+				+ userService.getSessionUser().getLastName());
+		System.out.println(
+				"---------------------------------------------------------------------------------------------");
 
-		// Things to obtain from user: first name, last name, email,username, password
+		System.out.println("Full Name: " + userService.getSessionUser().getFirstName() + " "
+				+ userService.getSessionUser().getLastName());
+		System.out.println("Email: " + userService.getSessionUser().getEmail());
 
-		System.out.println("Please provided us with some basic information");
-		System.out.print("First Name: ");
-		String firstName = consoleReader.readLine();
+		System.out.println("Would you like to make come changes?(y/n)");
+		String userSelection = consoleReader.readLine();
 
-		System.out.print("Last Name: ");
-		String lastName = consoleReader.readLine();
+		switch (userSelection) {
+		case "y":
+			System.out.println("Please provided us with some basic information");
+			System.out.print("First Name: ");
+			String firstName = consoleReader.readLine();
 
-		System.out.print("Email: ");
-		String email = consoleReader.readLine();
+			System.out.print("Last Name: ");
+			String lastName = consoleReader.readLine();
 
-//		System.out.print("Username: ");
-//		String username = consoleReader.readLine();
-//
-//		System.out.print("Password: ");
-//		String password = consoleReader.readLine();
+			System.out.print("Email: ");
+			String email = consoleReader.readLine();
 
-		User user = new User(firstName, lastName, email);
-
-		try {
-			userService.updateUser(user);
-		} catch (InvalidRequestException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("YOU HAVE PROVIDED INVALID DATA PLEASE TRY AGAIN\n\n\n");
-
-			router.transfer("/welcome");
+			User user = new User(firstName, lastName, email);
+			
+			try {
+				userService.updateUser(user);
+			} catch (InvalidRequestException e) {
+				// e.printStackTrace();
+				System.out.println("YOU HAVE PROVIDED INVALID DATA PLEASE TRY AGAIN\n\n\n");
+				router.transfer("/dashboard");
+			}
+			break;
+		case "n":
+			System.out.println("The user selected no");
+		default:
+			System.out.println("The user made an invalid selection");
 		}
+		System.out.println(
+				"---------------------------------------------------------------------------------------------");
+
+		System.out.println("Full Name: " + userService.getSessionUser().getFirstName() + " "
+				+ userService.getSessionUser().getLastName());
+		System.out.println("Email: " + userService.getSessionUser().getEmail());
+		router.transfer("/dashboard");
 
 	}
 

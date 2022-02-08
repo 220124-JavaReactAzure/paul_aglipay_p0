@@ -53,19 +53,20 @@ public class UserService {
 			throw new InvalidRequestException("Invalid user data provider");
 		}
 
-//		boolean EmailAvailable = userDao.findByEmail(user.getEmail()).equals(user.getEmail());
-//		boolean emailAvailable = userDao.findByEmail(user.getEmail()).equals(user.getEmail());
-		boolean EmailAvailable = true;
-		boolean emailAvailable = true;
+//		boolean IdAvailable = userDao.findById(user.getId()) != null;
+//		boolean idAvailable = userDao.findById(user.getId()) != null;
+		
+		boolean IdAvailable = true;
+		boolean idAvailable = true;
 
-		if (!EmailAvailable || !emailAvailable) {
-			if (!EmailAvailable && emailAvailable) {
-				throw new ResourcePersistenceException("The provided Email was already taken in the database");
-			} else if (EmailAvailable) {
-				throw new ResourcePersistenceException("The provided email was already taken in the database");
+		if (!IdAvailable || !idAvailable) {
+			if (!IdAvailable && idAvailable) {
+				throw new ResourcePersistenceException("The provided User does not exist in the database");
+			} else if (IdAvailable) {
+				throw new ResourcePersistenceException("The provided User does not exist in the database");
 			} else {
 				throw new ResourcePersistenceException(
-						"The provided Email and email were already taken in the database");
+						"User does not exist in the database");
 			}
 		}
 		
@@ -75,6 +76,8 @@ public class UserService {
 		if (!persistedUser) {
 			throw new ResourcePersistenceException("The User could not be persisted");
 		}
+		
+		sessionUser = user;
 
 		return user;
 	}
