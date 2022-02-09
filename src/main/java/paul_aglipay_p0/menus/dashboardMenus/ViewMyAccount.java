@@ -28,7 +28,7 @@ public class ViewMyAccount extends Menu {
 		User sessionUser = userService.getSessionUser();
 
 		System.out.println("Account(s) View for: \n" + sessionUser.getFirstName() + " " + sessionUser.getLastName());
-
+		System.out.println("Loading...");
 		int rowNum = 0;
 		ArrayList<Account> accountTable = accountService.getAccounts();
 
@@ -54,12 +54,10 @@ public class ViewMyAccount extends Menu {
 			String okVar = consoleReader.readLine();
 
 			Account accountRow = accountTable.get(Integer.parseInt(okVar) - 1);
-			System.out.println(
-					accountRow.getId() + " \n " + accountRow.getDescription() + "\n " + accountRow.getAmount());
+			System.out.println("Account Type: " + accountRow.getDescription() + "\n Total: " + accountRow.getAmount());
 
 			accountService.setSessionAccount(accountRow);
 
-			System.out.println("Is Ok: " + okVar);
 			router.transfer("/account");
 		} else {
 

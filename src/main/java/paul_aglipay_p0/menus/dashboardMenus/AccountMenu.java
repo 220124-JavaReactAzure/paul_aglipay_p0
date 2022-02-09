@@ -30,10 +30,8 @@ public class AccountMenu extends Menu {
 	public void render() throws Exception {
 
 		Account sessionAccount = accountService.getSessionAccount();
-		System.out.println("View for: Account\n");
-
+		System.out.println("\n");
 		System.out.println(sessionAccount.getDescription() + " - " + sessionAccount.getAmount());
-
 		System.out.println(
 				"---------------------------------------------------------------------------------------------");
 		System.out.printf("%5s %10s ", "DESCRIPTION", "AMOUNT");
@@ -81,7 +79,6 @@ public class AccountMenu extends Menu {
 
 					}
 					System.out.println("View for: Account\n");
-
 					System.out.println(sessionAccount.getDescription() + " - " + sessionAccount.getAmount());
 
 					System.out.println(

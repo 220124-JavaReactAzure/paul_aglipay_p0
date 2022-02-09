@@ -35,15 +35,15 @@ public class DashboardMenu extends Menu {
 
 		switch (userSelection) {
 		case "1":
-			System.out.println("View/edit profile selected");
+//			System.out.println("View/edit profile selected");
 			router.transfer("/user-profile-edit");
 			break;
 		case "2":
-			System.out.println("View/edit/create monsters selected");
+//			System.out.println("View/edit/create account selected");
 			router.transfer("/create-account");
 			break;
 		case "3":
-			System.out.println("View My Account(s) selected:");
+//			System.out.println("View of My Account(s):");
 			router.transfer("/my-accounts");
 			break;
 		case "4":
