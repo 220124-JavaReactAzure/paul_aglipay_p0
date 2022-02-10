@@ -86,13 +86,14 @@ public class UserService {
 		return user;
 	}
 
-	public void authenticateUser(String email) {
+	public void authenticateUser(String email, String password) {
 
 		if (email == null || email.trim().equals("")) {
 			throw new InvalidRequestException("Either email is an invalid entry. Please try logging in again");
 		}
 
-		User authenticatedUser = userDao.findByEmail(email);
+//		User authenticatedUser = userDao.findByEmail(email);
+		User authenticatedUser = userDao.findByEmailAndPassword(email, password);
 
 		if (authenticatedUser == null) {
 			throw new AuthenticationException(

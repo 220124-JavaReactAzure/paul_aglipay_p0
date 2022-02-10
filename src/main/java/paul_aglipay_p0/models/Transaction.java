@@ -3,7 +3,7 @@ package paul_aglipay_p0.models;
 public class Transaction {
 	private String id;
 	private String description;
-	private String amount;
+	private Double amount;
 	private Account account;	
 
 	public Transaction() {
@@ -12,7 +12,7 @@ public class Transaction {
 	}
 	
 
-	public Transaction(String description, String amount) {
+	public Transaction(String description, Double amount) {
 		super();
 		this.description = description;
 		this.amount = amount;
@@ -36,11 +36,11 @@ public class Transaction {
 		this.description = description;
 	}
 
-	public String getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 

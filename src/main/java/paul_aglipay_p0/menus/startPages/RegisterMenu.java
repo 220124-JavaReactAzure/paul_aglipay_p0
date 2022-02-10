@@ -35,13 +35,10 @@ public class RegisterMenu  extends Menu {
 		System.out.print("Email: ");
 		String email = consoleReader.readLine();
 
-//		System.out.print("Username: ");
-//		String username = consoleReader.readLine();
-//
-//		System.out.print("Password: ");
-//		String password = consoleReader.readLine();
+		System.out.print("Password: ");
+		String password = consoleReader.readLine();
 
-		User user = new User(firstName, lastName, email);
+		User user = new User(firstName, lastName, email, password);
 
 		try {
 			userService.registerNewUser(user);

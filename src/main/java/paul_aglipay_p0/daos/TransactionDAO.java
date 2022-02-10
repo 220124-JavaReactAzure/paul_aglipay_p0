@@ -20,13 +20,13 @@ public class TransactionDAO implements CrudDAO<Transaction> {
 
 			transaction.setId(UUID.randomUUID().toString());
 
-			String sql = "insert into transactions (id, description, amount, account_id) values (?, ?, ?, ?)";
+			String sql = "insert into transactions (id, description, amount, account_id, transaction_date) values (?, ?, ?, ?, now())";
 
 			PreparedStatement ps = conn.prepareStatement(sql);
 
 			ps.setString(1, transaction.getId());
 			ps.setString(2, transaction.getDescription());
-			ps.setString(3, transaction.getAmount());
+			ps.setDouble(3, transaction.getAmount());
 			ps.setString(4, transaction.getAccount().getId());
 
 			int rowsInserted = ps.executeUpdate();
@@ -81,7 +81,7 @@ public class TransactionDAO implements CrudDAO<Transaction> {
 				Transaction transaction = new Transaction();
 				transaction.setId(rs.getString("id"));
 				transaction.setDescription(rs.getString("description"));
-				transaction.setAmount(rs.getString("amount"));
+				transaction.setAmount(Double.parseDouble(rs.getString("amount")));
 
 				results.add(transaction);
 			}

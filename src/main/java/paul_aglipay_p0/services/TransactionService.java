@@ -43,7 +43,7 @@ public class TransactionService {
 		Account acSession = accountService.getSessionAccount();
 		logger.log("newTransaction: " + newTransaction.getAmount());	
 		DecimalFormat twoPlaces = new DecimalFormat("0.00");
-		acSession.setAmount(String.valueOf(twoPlaces.format(Double.parseDouble(acSession.getAmount()) - Double.parseDouble(newTransaction.getAmount()))));		
+		acSession.setAmount(String.valueOf(twoPlaces.format(Double.parseDouble(acSession.getAmount()) - newTransaction.getAmount())));		
 
 		logger.log("acSession: " + acSession.getAmount());
 		
@@ -70,7 +70,7 @@ public class TransactionService {
 		Account acSession = sendToAccount;
 		logger.log("newTransaction: " + newTransaction.getAmount());	
 		DecimalFormat twoPlaces = new DecimalFormat("0.00");
-		acSession.setAmount(String.valueOf(twoPlaces.format(Double.parseDouble(acSession.getAmount()) + Double.parseDouble(newTransaction.getAmount()))));		
+		acSession.setAmount(String.valueOf(twoPlaces.format(Double.parseDouble(acSession.getAmount()) + newTransaction.getAmount())));		
 
 		logger.log("acSession: " + acSession.getAmount());
 		
@@ -88,7 +88,7 @@ public class TransactionService {
 			return false;
 		if (newTransaction.getDescription() == null || newTransaction.getDescription().trim().equals(""))
 			return false;
-//		if(newAccount.getAmount() == null || newAccount.getAmount().trim().equals("") || Integer.valueOf(newAccount.getAmount()) > 20 || Integer.valueOf(newAccount.getAmount()) < 0) return false;
-		return newTransaction.getAmount() != null || !newTransaction.getAmount().trim().equals("");
+		if(newTransaction.getAmount() == null  || Double.valueOf(newTransaction.getAmount()) > 2000 || Double.valueOf(newTransaction.getAmount()) < 0) return false;
+		return newTransaction.getAmount() != null;
 	}
 }

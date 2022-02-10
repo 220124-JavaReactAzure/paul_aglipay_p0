@@ -17,11 +17,13 @@ import paul_aglipay_p0.services.AccountService;
 import paul_aglipay_p0.services.TransactionService;
 import paul_aglipay_p0.services.UserService;
 import paul_aglipay_p0.util.MenuRouter;
+import paul_aglipay_p0.util.logging.Logger;
 
 public class AccountMenu extends Menu {
 	private final AccountService accountService;
 	private final UserService userService;
 	private final TransactionService transactionService;
+	private final Logger logger;
 
 	public AccountMenu(BufferedReader consoleReader, MenuRouter router, UserService userService,
 			AccountService accountService, TransactionService transactionService) {
@@ -29,6 +31,9 @@ public class AccountMenu extends Menu {
 		this.userService = userService;
 		this.accountService = accountService;
 		this.transactionService = transactionService;
+
+		logger = Logger.getLogger(true);
+		logger.log("AccountMenu is initiliazing.....");
 	}
 
 	@Override
@@ -45,7 +50,7 @@ public class AccountMenu extends Menu {
 		ArrayList<Transaction> transactionsTable = transactionService.getTransactionsByAccount(sessionAccount.getId());
 		for (Transaction tt : transactionsTable) {
 			DecimalFormat twoPlaces = new DecimalFormat("0.00");
-			String tt_getAmount = "$" + String.valueOf(twoPlaces.format(Double.parseDouble(tt.getAmount())));
+			String tt_getAmount = "$" + String.valueOf(twoPlaces.format(tt.getAmount()));
 			System.out.format("%7s %14s", tt.getDescription(), tt_getAmount);
 			System.out.println();
 		}
@@ -80,23 +85,32 @@ public class AccountMenu extends Menu {
 					System.out.println("Is Ok?(y)");
 					String okVar = consoleReader.readLine();
 					if (okVar.equals("y")) {
-						Transaction newTransaction = new Transaction(transactionDescription, transactionAmount);
-						transactionService.createTransaction(newTransaction);
-						
-						
-						System.out.println("Transfer to Account?(y)");
-						String accNumOk = consoleReader.readLine();
-						
-						if (accNumOk.equals("y")) {
-							System.out.println("Please provide ROUTING NUMBER:");
-							String accNum = consoleReader.readLine();
-							Transaction newTransaction2 = new Transaction(transactionDescription, transactionAmount);						
-							Account sendToAccount = accountService.getAccountByIdNoSess(accNum);
-							transactionService.receiveTransaction(newTransaction2, sendToAccount);
 
-						} else {
-							System.out.println("Cancelled");
+						try {
 
+							Transaction newTransaction = new Transaction(transactionDescription, Double.parseDouble(transactionAmount));
+							transactionService.createTransaction(newTransaction);
+
+							System.out.println("Transfer to Account?(y)");
+							String accNumOk = consoleReader.readLine();
+
+							if (accNumOk.equals("y")) {
+								System.out.println("Please provide ROUTING NUMBER:");
+								String accNum = consoleReader.readLine();
+								Transaction newTransaction2 = new Transaction(transactionDescription,
+										Double.parseDouble(transactionAmount));
+								Account sendToAccount = accountService.getAccountByIdNoSess(accNum);
+								transactionService.receiveTransaction(newTransaction2, sendToAccount);
+
+								logger.log("transactionService:" + accountService.getSessionAccount().getId() + " -> "
+										+ accNum);
+
+							} else {
+								System.out.println("Cancelled");
+
+							}
+						} catch (Exception e) {
+							System.out.println("There is a problem with your entry.");
 						}
 
 					} else {
@@ -117,7 +131,7 @@ public class AccountMenu extends Menu {
 
 						DecimalFormat twoPlaces = new DecimalFormat("0.00");
 						String tt_getAmount = "$"
-								+ String.valueOf(twoPlaces.format(Double.parseDouble(tt.getAmount())));
+								+ String.valueOf(twoPlaces.format(tt.getAmount()));
 						System.out.format("%7s %14s", tt.getDescription(), tt_getAmount);
 						System.out.println();
 					}

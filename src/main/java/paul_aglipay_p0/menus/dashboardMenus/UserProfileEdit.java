@@ -42,7 +42,10 @@ public class UserProfileEdit extends Menu {
 			System.out.print("Email: ");
 			String email = consoleReader.readLine();
 
-			User user = new User(firstName, lastName, email);
+			System.out.print("Password: ");
+			String password = consoleReader.readLine();
+
+			User user = new User(firstName, lastName, email, password);
 			
 			try {
 				userService.updateUser(user);

@@ -21,11 +21,11 @@ public class LoginMenu extends Menu {
 		System.out.println("Please enter your credentials for you account.");
 		System.out.print("Email: ");
 		String username = consoleReader.readLine();
-//	     System.out.print("Password: ");
-//	     String password = consoleReader.readLine();
+	     System.out.print("Password: ");
+	     String password = consoleReader.readLine();
 
 		try {
-			userService.authenticateUser(username);
+			userService.authenticateUser(username, password);
 			router.transfer("/dashboard");
 		} catch (AuthenticationException e) {
 			System.out.println("Incorrect credentials provided! No matching user account found.");
