@@ -23,8 +23,6 @@ public class RegisterMenu  extends Menu {
 		
 		System.out.println("The User selected Register");
 
-		// Things to obtain from user: first name, last name, email,username, password
-
 		System.out.println("Please provided us with some basic information");
 		System.out.print("First Name: ");
 		String firstName = consoleReader.readLine();
@@ -44,7 +42,13 @@ public class RegisterMenu  extends Menu {
 			userService.registerNewUser(user);
 		} catch (InvalidRequestException e) {
 			// TODO Auto-generated catch block
-			// e.printStackTrace(); 
+			 e.printStackTrace(); 
+			System.out.println("YOU HAVE PROVIDED INVALID DATA PLEASE TRY AGAIN\n\n\n");
+
+			router.transfer("/welcome");
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			 e.printStackTrace(); 
 			System.out.println("YOU HAVE PROVIDED INVALID DATA PLEASE TRY AGAIN\n\n\n");
 
 			router.transfer("/welcome");

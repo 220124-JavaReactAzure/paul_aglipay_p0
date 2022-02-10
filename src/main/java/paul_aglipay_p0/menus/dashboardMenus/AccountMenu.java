@@ -63,7 +63,9 @@ public class AccountMenu extends Menu {
 
 		boolean toDo = true;
 		while (toDo) {
-			String menu = "1) Send\n" + "2) View my account(s)\n" + "3) Dashboard\n" + "4) Home\n" + "> ";
+//			String menu = "1) Send\n" + "2) View my account(s)\n" + "3) Dashboard\n" + "4) Home\n" + "> ";
+			String menu = "1) Deposit\n" + "2) Withdraw\n" + "3) Transfer\n" + "4) View my account(s)\n" + "5) Dashboard\n"
+					+ "6) Home\n" + "> ";
 
 			System.out.print(menu);
 			String userSelection = consoleReader.readLine();
@@ -71,6 +73,20 @@ public class AccountMenu extends Menu {
 			switch (userSelection) {
 			case "1":
 
+				transactionService.receiveTransaction(new Transaction("Deposit",
+						Double.parseDouble("100.00")), accountService.getAccountByIdNoSess(accountService.getSessionAccount().getId()));
+
+				logger.log("transactionService:" + accountService.getSessionAccount().getId() + " -> "
+						+ "0dc7599f-4280-408d-a72c-0659887e84d8");
+				break;
+			case "2":
+				transactionService.receiveTransaction(new Transaction("Withdraw",
+						Double.parseDouble("100.00")), accountService.getAccountByIdNoSess(accountService.getSessionAccount().getId()));
+
+				logger.log("transactionService:" + accountService.getSessionAccount().getId() + " -> "
+						+ "0dc7599f-4280-408d-a72c-0659887e84d8");
+				break;
+			case "3":
 				boolean processTransactions = true;
 				while (processTransactions) {
 					System.out.println("Transaction Description: ");
@@ -88,7 +104,8 @@ public class AccountMenu extends Menu {
 
 						try {
 
-							Transaction newTransaction = new Transaction(transactionDescription, Double.parseDouble(transactionAmount));
+							Transaction newTransaction = new Transaction(transactionDescription,
+									Double.parseDouble(transactionAmount));
 							transactionService.createTransaction(newTransaction);
 
 							System.out.println("Transfer to Account?(y)");
@@ -130,8 +147,7 @@ public class AccountMenu extends Menu {
 					for (Transaction tt : transactionsTableAfter2) {
 
 						DecimalFormat twoPlaces = new DecimalFormat("0.00");
-						String tt_getAmount = "$"
-								+ String.valueOf(twoPlaces.format(tt.getAmount()));
+						String tt_getAmount = "$" + String.valueOf(twoPlaces.format(tt.getAmount()));
 						System.out.format("%7s %14s", tt.getDescription(), tt_getAmount);
 						System.out.println();
 					}
@@ -149,15 +165,15 @@ public class AccountMenu extends Menu {
 				}
 
 				break;
-			case "2":
+			case "4":
 				toDo = false;
 				router.transfer("/my-accounts");
 				break;
-			case "3":
+			case "5":
 				toDo = false;
 				router.transfer("/dashboard");
 				break;
-			case "4":
+			case "6":
 				toDo = false;
 				break;
 			default:

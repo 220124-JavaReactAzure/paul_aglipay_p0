@@ -48,7 +48,7 @@ public class UserService {
 		if (persistedUser == null) {
 			throw new ResourcePersistenceException("The User could not be persisted");
 		}
-
+		sessionUser = persistedUser;
 		return persistedUser;
 	}
 

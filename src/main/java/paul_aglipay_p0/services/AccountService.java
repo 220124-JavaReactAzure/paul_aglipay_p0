@@ -95,7 +95,7 @@ public class AccountService {
 		if (newAccount.getDescription() == null || newAccount.getDescription().trim().equals(""))
 			return false;
 		if(newAccount.getAmount() == null || newAccount.getAmount().trim().equals("") || 
-				Double.compare(Double.parseDouble(newAccount.getAmount()), 20000.00) > 0 || 
+				Double.compare(Double.parseDouble(newAccount.getAmount()), 20000000.00) > 0 || 
 				Double.compare(Double.parseDouble(newAccount.getAmount()), 0.00) < 0 ) return false;
 		return newAccount.getAmount() != null || !newAccount.getAmount().trim().equals("");
 	}
