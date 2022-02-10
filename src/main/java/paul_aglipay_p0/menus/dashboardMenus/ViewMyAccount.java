@@ -35,14 +35,14 @@ public class ViewMyAccount extends Menu {
 
 		System.out.println(
 				"---------------------------------------------------------------------------------------------");
-		System.out.printf("%7s %5s %10s ", "Select", "DESCRIPTION", "AMOUNT");
+		System.out.printf("%14s %14s %14s %14s", "Select", "DESCRIPTION", "AMOUNT", "ROUTING NUMBER");
 		System.out.println("");
 				
 		for (Account accountRow : accountTable) {
 
 			DecimalFormat twoPlaces = new DecimalFormat("0.00");
 			String accountRow_getAmount = "$" + String.valueOf(twoPlaces.format(Double.parseDouble(accountRow.getAmount())));
-			System.out.format("%7s %7s %14s", String.valueOf(rowNum + 1), accountRow.getDescription(), accountRow_getAmount );			
+			System.out.format("%14s %14s %14s %14s", String.valueOf(rowNum + 1), accountRow.getDescription(), accountRow_getAmount, accountRow.getId() );			
 			System.out.println("");
 			accountService.setSessionAccount(accountRow);
 			rowNum++;

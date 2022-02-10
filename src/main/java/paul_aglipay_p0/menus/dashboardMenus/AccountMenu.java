@@ -83,15 +83,21 @@ public class AccountMenu extends Menu {
 						Transaction newTransaction = new Transaction(transactionDescription, transactionAmount);
 						transactionService.createTransaction(newTransaction);
 						
-						Transaction newTransaction2 = new Transaction(transactionDescription, transactionAmount);
 						
-						Account sendToAccount = accountService.getAccountByIdNoSess("47a3fd50-7221-4431-89e9-6317bedc0a24");
-//						Account sendToAccount = new Account();
-//						sendToAccount.setId("47a3fd50-7221-4431-89e9-6317bedc0a24");
-//						sendToAccount.setUser(userService.getSessionUser());
-//						sendToAccount.setDescription("Savings");
-//						sendToAccount.setAmount("2000.00");
-						transactionService.receiveTransaction(newTransaction2, sendToAccount);
+						System.out.println("Transfer to Account?(y)");
+						String accNumOk = consoleReader.readLine();
+						
+						if (accNumOk.equals("y")) {
+							System.out.println("Please provide ROUTING NUMBER:");
+							String accNum = consoleReader.readLine();
+							Transaction newTransaction2 = new Transaction(transactionDescription, transactionAmount);						
+							Account sendToAccount = accountService.getAccountByIdNoSess(accNum);
+							transactionService.receiveTransaction(newTransaction2, sendToAccount);
+
+						} else {
+							System.out.println("Cancelled");
+
+						}
 
 					} else {
 						System.out.println("Cancelled");
