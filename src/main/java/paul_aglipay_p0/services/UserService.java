@@ -20,6 +20,10 @@ public class UserService {
 		return sessionUser;
 	}
 
+	public void setSessionUser(User sessionUser) {
+		this.sessionUser = sessionUser;
+	}
+
 	public User registerNewUser(User newUser) {
 		if (!isUserValid(newUser)) {
 			throw new InvalidRequestException("Invalid user data provider");

@@ -79,12 +79,13 @@ public class AccountDAO implements CrudDAO<Account> {
 	public boolean update(Account account) {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
 
-			String sql = "update accounts SET amount = ? where id = ?";
+			String sql = "update accounts SET description = ?, amount = ? where id = ?";
 
 			PreparedStatement ps = conn.prepareStatement(sql);
 
-			ps.setString(1, account.getAmount());
-			ps.setString(2, account.getId());
+			ps.setString(1, account.getDescription());
+			ps.setString(2, account.getAmount());
+			ps.setString(3, account.getId());
 
 			int rowsInserted = ps.executeUpdate();
 
@@ -97,10 +98,7 @@ public class AccountDAO implements CrudDAO<Account> {
 			e.printStackTrace();
 		}
 
-		return false;
-		
-		
-		
+		return false;		
 	}
 
 	@Override

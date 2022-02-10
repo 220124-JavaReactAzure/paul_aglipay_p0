@@ -55,12 +55,8 @@ public class ViewMyAccount extends Menu {
 		if (accountTable.size() > 0) {
 			System.out.println("Please select by number:");
 			String okVar = consoleReader.readLine();
-
 			Account accountRow = accountTable.get(Integer.parseInt(okVar) - 1);
-			System.out.println("Account Type: " + accountRow.getDescription() + "\n Total: " + accountRow.getAmount());
-
 			accountService.setSessionAccount(accountRow);
-
 			router.transfer("/account");
 		} else {
 

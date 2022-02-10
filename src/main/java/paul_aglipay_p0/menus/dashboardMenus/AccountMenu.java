@@ -3,11 +3,16 @@ package paul_aglipay_p0.menus.dashboardMenus;
 import static paul_aglipay_p0.util.AppState.shutdown;
 
 import java.io.BufferedReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import paul_aglipay_p0.daos.AccountDAO;
+import paul_aglipay_p0.daos.TransactionDAO;
+import paul_aglipay_p0.daos.UserDAO;
 import paul_aglipay_p0.menus.Menu;
 import paul_aglipay_p0.models.Account;
 import paul_aglipay_p0.models.Transaction;
+import paul_aglipay_p0.models.User;
 import paul_aglipay_p0.services.AccountService;
 import paul_aglipay_p0.services.TransactionService;
 import paul_aglipay_p0.services.UserService;
@@ -31,14 +36,17 @@ public class AccountMenu extends Menu {
 
 		Account sessionAccount = accountService.getSessionAccount();
 		System.out.println("\n");
-		System.out.println("Account Name: " + sessionAccount.getDescription() + " - Total Amount: $" + sessionAccount.getAmount());
+		System.out.println(
+				"Account Name: " + sessionAccount.getDescription() + "\nTotal Amount: $" + sessionAccount.getAmount());
 		System.out.println(
 				"---------------------------------------------------------------------------------------------");
 		System.out.printf("%5s %10s ", "DESCRIPTION", "AMOUNT");
 		System.out.println();
 		ArrayList<Transaction> transactionsTable = transactionService.getTransactionsByAccount(sessionAccount.getId());
 		for (Transaction tt : transactionsTable) {
-			System.out.format("%7s %14s", tt.getDescription(), tt.getAmount());
+			DecimalFormat twoPlaces = new DecimalFormat("0.00");
+			String tt_getAmount = "$" + String.valueOf(twoPlaces.format(Double.parseDouble(tt.getAmount())));
+			System.out.format("%7s %14s", tt.getDescription(), tt_getAmount);
 			System.out.println();
 		}
 		System.out.println(
@@ -66,7 +74,7 @@ public class AccountMenu extends Menu {
 					System.out.println("Transaction Amount: ");
 					String transactionAmount = consoleReader.readLine();
 
-					System.out.println("transactionDescription: " + transactionDescription + "\ntransactionAmount: "
+					System.out.println("transactionDescription: " + transactionDescription + "\ntransactionAmount: $"
 							+ transactionAmount);
 
 					System.out.println("Is Ok?(y)");
@@ -74,12 +82,24 @@ public class AccountMenu extends Menu {
 					if (okVar.equals("y")) {
 						Transaction newTransaction = new Transaction(transactionDescription, transactionAmount);
 						transactionService.createTransaction(newTransaction);
+						
+						Transaction newTransaction2 = new Transaction(transactionDescription, transactionAmount);
+						
+						Account sendToAccount = accountService.getAccountByIdNoSess("47a3fd50-7221-4431-89e9-6317bedc0a24");
+//						Account sendToAccount = new Account();
+//						sendToAccount.setId("47a3fd50-7221-4431-89e9-6317bedc0a24");
+//						sendToAccount.setUser(userService.getSessionUser());
+//						sendToAccount.setDescription("Savings");
+//						sendToAccount.setAmount("2000.00");
+						transactionService.receiveTransaction(newTransaction2, sendToAccount);
+
 					} else {
 						System.out.println("Cancelled");
 
 					}
 					System.out.println("View for: Account\n");
-					System.out.println(sessionAccount.getDescription() + " - " + sessionAccount.getAmount());
+					System.out.println("Account Name: " + sessionAccount.getDescription() + "\nTotal Amount: $"
+							+ sessionAccount.getAmount());
 
 					System.out.println(
 							"---------------------------------------------------------------------------------------------");
@@ -88,7 +108,11 @@ public class AccountMenu extends Menu {
 					ArrayList<Transaction> transactionsTableAfter2 = transactionService
 							.getTransactionsByAccount(sessionAccount.getId());
 					for (Transaction tt : transactionsTableAfter2) {
-						System.out.format("%7s %14s", tt.getDescription(), tt.getAmount());
+
+						DecimalFormat twoPlaces = new DecimalFormat("0.00");
+						String tt_getAmount = "$"
+								+ String.valueOf(twoPlaces.format(Double.parseDouble(tt.getAmount())));
+						System.out.format("%7s %14s", tt.getDescription(), tt_getAmount);
 						System.out.println();
 					}
 					System.out.println(
@@ -96,7 +120,7 @@ public class AccountMenu extends Menu {
 
 					System.out.println("Process Another?(y)");
 					String processAnother = consoleReader.readLine();
-					
+
 					if (processAnother.equals("y")) {
 						processTransactions = true;
 					} else {

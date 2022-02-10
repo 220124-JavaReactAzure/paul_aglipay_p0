@@ -8,15 +8,19 @@ import paul_aglipay_p0.exceptions.InvalidRequestException;
 import paul_aglipay_p0.exceptions.ResourcePersistenceException;
 import paul_aglipay_p0.models.Account;
 import paul_aglipay_p0.models.Transaction;
+import paul_aglipay_p0.util.logging.Logger;
 
 public class TransactionService {
 
 	private TransactionDAO transactionDAO;
 	private final AccountService accountService;
-
+	private final Logger logger;
 	public TransactionService(TransactionDAO transactionDAO, AccountService accountService) {
 		this.accountService = accountService;
 		this.transactionDAO = transactionDAO;
+		
+		logger = Logger.getLogger(true);
+		logger.log("TransactionService is initiliazing.....");
 	}
 
 	public ArrayList<Transaction> getTransactionsByAccount(String id) {
@@ -37,11 +41,44 @@ public class TransactionService {
 		}
 		
 		Account acSession = accountService.getSessionAccount();
-		System.out.println("newTransaction: " + newTransaction.getAmount());	
+		logger.log("newTransaction: " + newTransaction.getAmount());	
 		DecimalFormat twoPlaces = new DecimalFormat("0.00");
 		acSession.setAmount(String.valueOf(twoPlaces.format(Double.parseDouble(acSession.getAmount()) - Double.parseDouble(newTransaction.getAmount()))));		
-		System.out.println("ac: " + acSession.getAmount());
-		accountService.updateAccount(acSession);
+
+		logger.log("acSession: " + acSession.getAmount());
+		
+		try {
+			accountService.updateAccount(acSession);
+		}catch(InvalidRequestException e) {
+			System.out.println("InvalidRequestException: acSession" + acSession.getAmount() + e);
+		}
+		
+	}
+
+	public void receiveTransaction(Transaction newTransaction, Account sendToAccount) {
+		if (!isTransactionValid(newTransaction)) {
+			throw new InvalidRequestException("The Transaction was provided invalid information");
+		}
+
+		newTransaction.setAccount(sendToAccount);
+		Transaction createdTransaction = transactionDAO.create(newTransaction);
+
+		if (createdTransaction == null) {
+			throw new ResourcePersistenceException("The Transaction could not be persisted");
+		}
+		
+		Account acSession = sendToAccount;
+		logger.log("newTransaction: " + newTransaction.getAmount());	
+		DecimalFormat twoPlaces = new DecimalFormat("0.00");
+		acSession.setAmount(String.valueOf(twoPlaces.format(Double.parseDouble(acSession.getAmount()) + Double.parseDouble(newTransaction.getAmount()))));		
+
+		logger.log("acSession: " + acSession.getAmount());
+		
+		try {
+			accountService.updateAccount(acSession);
+		}catch(InvalidRequestException e) {
+			System.out.println("InvalidRequestException: acSession" + acSession.getAmount() + e);
+		}
 		
 	}
 	
