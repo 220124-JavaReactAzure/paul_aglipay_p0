@@ -76,9 +76,31 @@ public class AccountDAO implements CrudDAO<Account> {
 	}
 
 	@Override
-	public boolean update(Account updatedObj) {
-		// TODO Auto-generated method stub
+	public boolean update(Account account) {
+		try (Connection conn = ConnectionFactory.getInstance().getConnection()) {
+
+			String sql = "update accounts SET amount = ? where id = ?";
+
+			PreparedStatement ps = conn.prepareStatement(sql);
+
+			ps.setString(1, account.getAmount());
+			ps.setString(2, account.getId());
+
+			int rowsInserted = ps.executeUpdate();
+
+			if (rowsInserted != 0) {
+				return true;
+			}
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
 		return false;
+		
+		
+		
 	}
 
 	@Override

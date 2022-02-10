@@ -1,6 +1,7 @@
 package paul_aglipay_p0.menus.dashboardMenus;
 
 import java.io.BufferedReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import paul_aglipay_p0.menus.Menu;
@@ -36,10 +37,12 @@ public class ViewMyAccount extends Menu {
 				"---------------------------------------------------------------------------------------------");
 		System.out.printf("%7s %5s %10s ", "Select", "DESCRIPTION", "AMOUNT");
 		System.out.println("");
+				
 		for (Account accountRow : accountTable) {
-//			System.out.println(
-//					String.valueOf(rowNum + 1) + ":" + accountRow.getDescription() + " - " + accountRow.getAmount());
-			System.out.format("%7s %7s %14s", String.valueOf(rowNum + 1), accountRow.getDescription(), accountRow.getAmount());			
+
+			DecimalFormat twoPlaces = new DecimalFormat("0.00");
+			String accountRow_getAmount = "$" + String.valueOf(twoPlaces.format(Double.parseDouble(accountRow.getAmount())));
+			System.out.format("%7s %7s %14s", String.valueOf(rowNum + 1), accountRow.getDescription(), accountRow_getAmount );			
 			System.out.println("");
 			accountService.setSessionAccount(accountRow);
 			rowNum++;

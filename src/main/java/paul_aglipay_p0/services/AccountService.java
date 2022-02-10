@@ -44,6 +44,22 @@ public class AccountService {
 		}
 	}
 
+	public void updateAccount(Account newAccount) {
+		if (!isAccountValid(newAccount)) {
+			throw new InvalidRequestException("The Account was provided invalid information");
+		}
+
+		newAccount.setUser(userService.getSessionUser());
+		boolean createdAccount = accountDAO.update(newAccount);
+
+		if (!createdAccount) {
+			throw new ResourcePersistenceException("The Account could not be persisted");
+		} else {
+			setSessionAccount(newAccount);
+		}		
+		
+	}
+
 	public Account getAccountById(String id) {
 
 		Account userAccount = accountDAO.findById(id);

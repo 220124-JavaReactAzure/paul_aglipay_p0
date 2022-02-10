@@ -31,7 +31,7 @@ public class AccountMenu extends Menu {
 
 		Account sessionAccount = accountService.getSessionAccount();
 		System.out.println("\n");
-		System.out.println(sessionAccount.getDescription() + " - " + sessionAccount.getAmount());
+		System.out.println("Account Name: " + sessionAccount.getDescription() + " - Total Amount: $" + sessionAccount.getAmount());
 		System.out.println(
 				"---------------------------------------------------------------------------------------------");
 		System.out.printf("%5s %10s ", "DESCRIPTION", "AMOUNT");

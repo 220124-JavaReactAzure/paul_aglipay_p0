@@ -1,10 +1,12 @@
 package paul_aglipay_p0.services;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import paul_aglipay_p0.daos.TransactionDAO;
 import paul_aglipay_p0.exceptions.InvalidRequestException;
 import paul_aglipay_p0.exceptions.ResourcePersistenceException;
+import paul_aglipay_p0.models.Account;
 import paul_aglipay_p0.models.Transaction;
 
 public class TransactionService {
@@ -33,6 +35,14 @@ public class TransactionService {
 		if (createdTransaction == null) {
 			throw new ResourcePersistenceException("The Transaction could not be persisted");
 		}
+		
+		Account acSession = accountService.getSessionAccount();
+		System.out.println("newTransaction: " + newTransaction.getAmount());	
+		DecimalFormat twoPlaces = new DecimalFormat("0.00");
+		acSession.setAmount(String.valueOf(twoPlaces.format(Double.parseDouble(acSession.getAmount()) - Double.parseDouble(newTransaction.getAmount()))));		
+		System.out.println("ac: " + acSession.getAmount());
+		accountService.updateAccount(acSession);
+		
 	}
 	
 	private boolean isTransactionValid(Transaction newTransaction) {
