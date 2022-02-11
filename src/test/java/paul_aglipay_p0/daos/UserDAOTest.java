@@ -14,7 +14,7 @@ public class UserDAOTest {
 	public void testCreate() {
 
 		UserDAO userDao = new UserDAO();
-		User user = new User("Paul", "A", "pa@mail.com");
+		User user = new User("Paul", "A", "pa@mail.com", "pass");
 		userDao.create(user);
 		
 

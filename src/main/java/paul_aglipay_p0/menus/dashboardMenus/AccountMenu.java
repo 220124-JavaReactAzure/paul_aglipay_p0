@@ -63,27 +63,30 @@ public class AccountMenu extends Menu {
 
 		boolean toDo = true;
 		while (toDo) {
-//			String menu = "1) Send\n" + "2) View my account(s)\n" + "3) Dashboard\n" + "4) Home\n" + "> ";
-			String menu = "1) Deposit\n" + "2) Withdraw\n" + "3) Transfer\n" + "4) View my account(s)\n" + "5) Dashboard\n"
-					+ "6) Home\n" + "> ";
+			String menu = "1) Deposit\n" + "2) Withdraw\n" + "3) Transfer\n" + "4) View my account(s)\n"
+					+ "5) Dashboard\n" + "6) Home\n" + "> ";
 
 			System.out.print(menu);
 			String userSelection = consoleReader.readLine();
 
 			switch (userSelection) {
 			case "1":
+				System.out.println("Deposit Amount: ");
+				String transactionAmount = consoleReader.readLine();
+				transactionService.receiveTransaction(new Transaction("Deposit", Double.parseDouble(transactionAmount)),
+						accountService.getAccountByIdNoSess(accountService.getSessionAccount().getId()));
 
-				transactionService.receiveTransaction(new Transaction("Deposit",
-						Double.parseDouble("100.00")), accountService.getAccountByIdNoSess(accountService.getSessionAccount().getId()));
-
-				logger.log("transactionService:" + accountService.getSessionAccount().getId() + " -> "
+				logger.log("transactionService Deposit:" + accountService.getSessionAccount().getId() + " -> "
 						+ "0dc7599f-4280-408d-a72c-0659887e84d8");
 				break;
 			case "2":
-				transactionService.receiveTransaction(new Transaction("Withdraw",
-						Double.parseDouble("100.00")), accountService.getAccountByIdNoSess(accountService.getSessionAccount().getId()));
+				System.out.println("Withdraw Amount: ");
+				String transactionAmount2 = consoleReader.readLine();
+				transactionService.receiveTransaction(
+						new Transaction("Withdraw", Double.parseDouble("-" + transactionAmount2)),
+						accountService.getAccountByIdNoSess(accountService.getSessionAccount().getId()));
 
-				logger.log("transactionService:" + accountService.getSessionAccount().getId() + " -> "
+				logger.log("transactionService Withdraw:" + accountService.getSessionAccount().getId() + " -> "
 						+ "0dc7599f-4280-408d-a72c-0659887e84d8");
 				break;
 			case "3":
@@ -93,10 +96,10 @@ public class AccountMenu extends Menu {
 					String transactionDescription = consoleReader.readLine();
 
 					System.out.println("Transaction Amount: ");
-					String transactionAmount = consoleReader.readLine();
+					String transactionAmount3 = consoleReader.readLine();
 
 					System.out.println("transactionDescription: " + transactionDescription + "\ntransactionAmount: $"
-							+ transactionAmount);
+							+ transactionAmount3);
 
 					System.out.println("Is Ok?(y)");
 					String okVar = consoleReader.readLine();
@@ -105,7 +108,7 @@ public class AccountMenu extends Menu {
 						try {
 
 							Transaction newTransaction = new Transaction(transactionDescription,
-									Double.parseDouble(transactionAmount));
+									Double.parseDouble(transactionAmount3));
 							transactionService.createTransaction(newTransaction);
 
 							System.out.println("Transfer to Account?(y)");
@@ -115,7 +118,7 @@ public class AccountMenu extends Menu {
 								System.out.println("Please provide ROUTING NUMBER:");
 								String accNum = consoleReader.readLine();
 								Transaction newTransaction2 = new Transaction(transactionDescription,
-										Double.parseDouble(transactionAmount));
+										Double.parseDouble(transactionAmount3));
 								Account sendToAccount = accountService.getAccountByIdNoSess(accNum);
 								transactionService.receiveTransaction(newTransaction2, sendToAccount);
 

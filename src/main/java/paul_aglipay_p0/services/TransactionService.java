@@ -88,7 +88,7 @@ public class TransactionService {
 			return false;
 		if (newTransaction.getDescription() == null || newTransaction.getDescription().trim().equals(""))
 			return false;
-		if(newTransaction.getAmount() == null  || Double.valueOf(newTransaction.getAmount()) > 2000 || Double.valueOf(newTransaction.getAmount()) < 0) return false;
+		if(newTransaction.getAmount() == null  || Double.valueOf(newTransaction.getAmount()) > 2000 || Double.valueOf(newTransaction.getAmount()) < -2000) return false;
 		return newTransaction.getAmount() != null;
 	}
 }
